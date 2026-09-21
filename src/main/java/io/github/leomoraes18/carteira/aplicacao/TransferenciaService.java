@@ -10,9 +10,12 @@ import java.util.Objects;
 public class TransferenciaService {
 
     private final AutorizadorTransferencia autorizador;
+    private final AgendadorNotificacoes notificacoes;
 
-    public TransferenciaService(AutorizadorTransferencia autorizador) {
+    public TransferenciaService(AutorizadorTransferencia autorizador,
+                                AgendadorNotificacoes notificacoes) {
         this.autorizador = Objects.requireNonNull(autorizador, "autorizador é obrigatório");
+        this.notificacoes = Objects.requireNonNull(notificacoes, "agendador de notificações é obrigatório");
     }
 
 
@@ -32,5 +35,7 @@ public class TransferenciaService {
 
         pagador.enviar(valor);
         recebedor.receber(valor);
+
+        notificacoes.agendar(new Notificacao(recebedor.id(), recebedor.email(), valor));
     }
 }
