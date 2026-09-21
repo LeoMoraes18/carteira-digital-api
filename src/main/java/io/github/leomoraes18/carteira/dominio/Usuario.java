@@ -22,10 +22,15 @@ public class Usuario {
         this.carteira = Objects.requireNonNull(carteira, "carteira é obrigatório");
     }
 
-    public void enviar(BigDecimal valor) {
+    public void validarEnvio(BigDecimal valor) {
         if (!tipo.podeEnviar()) {
             throw new OperacaoNaoPermitidaException("usuários do tipo " + tipo + " não podem enviar transferêncis");
         }
+        carteira.validarDebito(valor);
+    }
+
+    public void enviar(BigDecimal valor) {
+        validarEnvio(valor);
         carteira.debitar(valor);
     }
 

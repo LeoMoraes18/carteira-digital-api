@@ -15,11 +15,15 @@ public class Carteira {
         this.saldo = saldoInicial;
     }
 
-    public void debitar(BigDecimal valor) {
+    public void validarDebito(BigDecimal valor) {
         validarValorPositivo(valor);
         if (saldo.compareTo(valor) < 0) {
             throw new SaldoInsuficienteException(saldo, valor);
         }
+    }
+
+    public void debitar(BigDecimal valor) {
+        validarDebito(valor);
         this.saldo = saldo.subtract(valor);
     }
 
