@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TransferenciaServiceTest {
+class TransferenciaServiceTest {
 
     private static final AutorizadorTransferencia SEMPRE_AUTORIZA = (pagador, recebedor, valor) -> true;
     private static final AutorizadorTransferencia NUNCA_AUTORIZA = (pagador, recebedor, valor) -> false;
