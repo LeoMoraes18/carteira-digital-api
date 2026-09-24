@@ -1,0 +1,14 @@
+services:
+    postgres:
+      image: postgres:18
+      environment:
+        POSTGRES_DB: carteira_digital
+        POSTGRES_USER: carteira
+        POSTGRES_PASSWORD: carteira
+      ports:
+        - "5433:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:
