@@ -2,8 +2,8 @@ package io.github.leomoraes18.carteira.infra.web;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import io.github.leomoraes18.carteira.aplicacao.ExecutorDeTransferencia;
 import io.github.leomoraes18.carteira.aplicacao.Resposta;
-import io.github.leomoraes18.carteira.aplicacao.TransferenciaController;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,10 +14,10 @@ import java.util.Objects;
 
 public class TransferenciaHttpHandler implements HttpHandler {
 
-    private final TransferenciaController controller;
+    private final ExecutorDeTransferencia executor;
 
-    public TransferenciaHttpHandler(TransferenciaController controller) {
-        this.controller = Objects.requireNonNull(controller, "controller é obrigatório");
+    public TransferenciaHttpHandler(ExecutorDeTransferencia executor) {
+        this.executor = Objects.requireNonNull(executor, "executor é obrigatório");
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TransferenciaHttpHandler implements HttpHandler {
             Object json = Json.parse(corpoBruto);
             @SuppressWarnings("unchecked")
                     Map<String, Object> corpo = (Map<String, Object>) json;
-            resposta = controller.transferir(corpo);
+            resposta = executor.transferir(corpo);
         } catch (JsonParseException | ClassCastException e) {
             resposta = new Resposta(400, Map.of("erro", "corpo da requisição não é um Json válido"));
         }

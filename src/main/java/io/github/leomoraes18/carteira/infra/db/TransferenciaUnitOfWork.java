@@ -1,6 +1,7 @@
 package io.github.leomoraes18.carteira.infra.db;
 
 import io.github.leomoraes18.carteira.aplicacao.AutorizadorTransferencia;
+import io.github.leomoraes18.carteira.aplicacao.ExecutorDeTransferencia;
 import io.github.leomoraes18.carteira.aplicacao.Resposta;
 import io.github.leomoraes18.carteira.aplicacao.TransferenciaController;
 import io.github.leomoraes18.carteira.aplicacao.TransferenciaService;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.Objects;
 
-public class TransferenciaUnitOfWork {
+public class TransferenciaUnitOfWork implements ExecutorDeTransferencia {
 
     private final ConexaoFactory conexoes;
     private final AutorizadorTransferencia autorizador;
@@ -20,7 +21,8 @@ public class TransferenciaUnitOfWork {
         this.autorizador = Objects.requireNonNull(autorizador, "autorizador é obrigatório");
     }
 
-    public Resposta executar(Map<String, Object> corpo) {
+    @Override
+    public Resposta transferir(Map<String, Object> corpo) {
         try (Connection conexao = conexoes.criar()) {
             conexao.setAutoCommit(false);
             try {

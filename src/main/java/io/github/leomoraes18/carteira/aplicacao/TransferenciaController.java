@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Objects;
 
-public class TransferenciaController {
+public class TransferenciaController implements ExecutorDeTransferencia {
 
     private final UsuarioRepository usuarios;
     private final TransferenciaService transferencias;
@@ -17,6 +17,7 @@ public class TransferenciaController {
         this.transferencias = Objects.requireNonNull(transferencias, "serviço de transferência é obrigatório");
     }
 
+    @Override
     public Resposta transferir(Map<String, Object> corpo) {
         BigDecimal valor;
         Long payerId;

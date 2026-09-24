@@ -45,7 +45,7 @@ class TransferenciaUnitOfWorkTest {
         TransferenciaUnitOfWork unitOfWork = new TransferenciaUnitOfWork(
                 CONEXAO, (pagador, recebedor, valor) -> true);
 
-        Resposta resposta = unitOfWork.executar(Map.of(
+        Resposta resposta = unitOfWork.transferir(Map.of(
                 "value", new BigDecimal("30.00"),
                 "payer", new BigDecimal(idPagador),
                 "payee", new BigDecimal(idRecebedor)));
@@ -61,7 +61,7 @@ class TransferenciaUnitOfWorkTest {
         TransferenciaUnitOfWork unitOfWork = new TransferenciaUnitOfWork(
                 CONEXAO, (pagador, recebedor, valor) -> false);
 
-        Resposta resposta = unitOfWork.executar(Map.of(
+        Resposta resposta = unitOfWork.transferir(Map.of(
                 "value", new BigDecimal("30.00"),
                 "payer", new BigDecimal(idPagador),
                 "payee", new BigDecimal(idRecebedor)));
@@ -77,7 +77,7 @@ class TransferenciaUnitOfWorkTest {
         TransferenciaUnitOfWork unitOfWork = new TransferenciaUnitOfWork(
                 CONEXAO, (pagador, recebedor, valor) -> true);
 
-        Resposta resposta = unitOfWork.executar(Map.of(
+        Resposta resposta = unitOfWork.transferir(Map.of(
                 "value", new BigDecimal("500.00"),
                 "payer", new BigDecimal(idPagador),
                 "payee", new BigDecimal(idRecebedor)));
