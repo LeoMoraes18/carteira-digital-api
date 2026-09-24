@@ -10,6 +10,7 @@ public class UsuarioRepositoryEmMemoria implements UsuarioRepository {
 
     private final Map<Long, Usuario> usuarios = new ConcurrentHashMap<>();
 
+    @Override
     public void salvar(Usuario usuario) {
         usuarios.put(usuario.id(), usuario);
     }

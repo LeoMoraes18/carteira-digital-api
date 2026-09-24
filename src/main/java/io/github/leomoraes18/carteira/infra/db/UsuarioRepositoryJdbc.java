@@ -20,6 +20,12 @@ public class UsuarioRepositoryJdbc implements UsuarioRepository {
             WHERE id = ?
             """;
 
+    private static final String SQL_ATUALIZAR_SALDO = """
+            UPDATE usuarios
+            SET saldo = ?
+            WHERE id = ?
+            """;
+
     private final ConexaoFactory conexoes;
 
     public UsuarioRepositoryJdbc(ConexaoFactory conexoes) {
@@ -39,6 +45,18 @@ public class UsuarioRepositoryJdbc implements UsuarioRepository {
             }
         } catch (SQLException e) {
             throw new ConexaoException("erro ao buscar usuário por id: " + id, e);
+        }
+    }
+
+    @Override
+    public void salvar(Usuario usuario) {
+        try (Connection conexao = conexoes.criar();
+            PreparedStatement statement = conexao.prepareStatement(SQL_ATUALIZAR_SALDO)) {
+            statement.setBigDecimal(1, usuario.carteira().saldo());
+            statement.setLong(2, usuario.id());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ConexaoException("erro ao salvar usuário: " + usuario.id(), e);
         }
     }
 

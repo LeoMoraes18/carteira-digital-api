@@ -60,6 +60,18 @@ class UsuarioRepositoryJdbcTest {
         assertTrue(encontrado.isEmpty());
     }
 
+    @Test
+    void deveAtualizarSaldoAoSalvar() {
+        Optional<Usuario> antes = repositorio.buscarPorId(idInserido);
+        Usuario usuario = antes.orElseThrow();
+
+        usuario.carteira().creditar(new BigDecimal("50.00"));
+        repositorio.salvar(usuario);
+
+        Optional<Usuario> depois = repositorio.buscarPorId(idInserido);
+        assertEquals(new BigDecimal("150.00"), depois.orElseThrow().carteira().saldo());
+    }
+
     private Long inserirUsuario(String nome, String documento, String email,
                                 TipoUsuario tipo, BigDecimal saldo) throws SQLException {
         String sql = """

@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface UsuarioRepository {
 
     Optional<Usuario> buscarPorId(long id);
+
+    void salvar(Usuario usuario);
 }
