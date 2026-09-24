@@ -35,6 +35,9 @@ public class TransferenciaController {
 
             transferencias.transferir(pagador, recebedor, valor);
 
+            usuarios.salvar(pagador);
+            usuarios.salvar(recebedor);
+
             return new Resposta(201, Map.of("mensagem", "transferência concluída"));
         } catch (UsuarioNaoEncontradoException e) {
             return erro(404, e.getMessage());
