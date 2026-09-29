@@ -9,6 +9,23 @@ services:
         - "5433:5432"
       volumes:
         - postgres_data:/var/lib/postgresql
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U carteira -d carteira_digital"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+
+    api:
+      build: .
+      ports:
+        - "8080:8080"
+      environment:
+        DB_URL: jdbc:postgresql://postgres:5432/carteira_digital
+        DB_USER: carteira
+        DB_PASSWORD: carteira
+      depends_on:
+        postgres:
+          condition: service_healthy
 
 volumes:
   postgres_data:

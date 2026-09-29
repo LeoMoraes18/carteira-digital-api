@@ -19,8 +19,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         int porta = 8080;
 
-        ConexaoFactory conexoes = new ConexaoFactory(
-                "jdbc:postgresql://localhost:5433/carteira_digital", "carteira", "carteira");
+        String dbUrl = System.getenv().getOrDefault("DB_URL",
+                "jdbc:postgresql://localhost:5433/carteira_digital");
+        String dbUser = System.getenv().getOrDefault("DB_USER", "carteira");
+        String dbPassword = System.getenv().getOrDefault("DB_PASSWORD", "carteira");
+
+        ConexaoFactory conexoes = new ConexaoFactory(dbUrl, dbUser, dbPassword);
 
         TransferenciaUnitOfWork unitOfWork = new TransferenciaUnitOfWork(
                 conexoes,
